@@ -7,7 +7,7 @@ import './listaProdutos.css';
 export default function listaProdutos() {
     const arrayTeste = [1, 2, 3, 4, 5]
 
-    
+
 
     return (
         <>
@@ -25,17 +25,17 @@ export default function listaProdutos() {
                     <p className=" fs-1">Categoria</p>
 
                     <Form>
-                        <div key={`default-checkbox`} className="mb-3">
+                        <div key={`default-radio`} className="mb-3">
                             <Form.Check
-                                type='checkbox'
-                                id='default-checkbox'
+                                type='radio'
+                                id='default-radio'
                                 label='Módulos'
                             />
 
                             <Form.Check
 
-                                type='checkbox'
-                                id='default-checkbox'
+                                type='radio'
+                                id='default-radio'
                                 label='Inversores'
                             />
                         </div>
@@ -56,15 +56,15 @@ export default function listaProdutos() {
                                         <hr />
                                         <div className="d-flex">
 
-                                        <Col> <Button className='' variant="info"><BsFillBagPlusFill /></Button></Col>
-                                        <Col>
-                                            <button className="botaoCarrinho">-</button>
-                                            <input type="text" disabled className="quantidadeCarrinho" />
-                                            <button className="botaoCarrinho">+</button>
-                                        </Col>
+                                            <Col className="d-flex justify-content-center"> 
+                                                <Button variant="danger">
+                                                    <BsFillBagPlusFill />
+                                                </Button>
+                                            </Col>
+
 
                                         </div>
-                                        
+
                                     </Card.Body>
                                 </Card>
                             )
