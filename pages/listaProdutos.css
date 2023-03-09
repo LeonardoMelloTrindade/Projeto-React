@@ -1,0 +1,14 @@
+.cards {
+    margin: 10px;
+}
+
+.botaoCarrinho {
+    width: 25px;
+    display: inline;
+}
+
+.quantidadeCarrinho {
+    display: inline;
+    width: 40px;
+}
+  
