@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Form, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { BsFillBagPlusFill } from "react-icons/bs";
 import './listaProdutos.css';
 
@@ -26,6 +26,11 @@ export default function listaProdutos() {
 
                     <Form>
                         <div key={`default-radio`} className="mb-3">
+                            <Form.Check
+                                type='radio'
+                                id='default'
+                                label='Todos'
+                            />
                             <Form.Check
                                 type='radio'
                                 id='default-radio'
@@ -56,11 +61,23 @@ export default function listaProdutos() {
                                         <hr />
                                         <div className="d-flex">
 
-                                            <Col className="d-flex justify-content-center"> 
-                                                <Button variant="danger">
+                                            <Col className="d-flex justify-content-center">
+                                                <Button href="/carrinho" variant="danger">
                                                     <BsFillBagPlusFill />
                                                 </Button>
                                             </Col>
+
+                                            <Row>
+                                                Quantidade disponível: 999
+                                                <Col>
+                                                    <button className="botaoCarrinho">-</button>
+                                                    <input type="text" disabled className="quantidadeCarrinho" />
+                                                    <button className="botaoCarrinho">+</button>
+                                                </Col>
+
+                                            </Row>
+
+
 
 
                                         </div>

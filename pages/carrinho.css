@@ -1,0 +1,35 @@
+.imagemCarrinho {
+    height: 100px;
+    width: 100px;
+}
+.botaoCarrinho {
+    width: 25px;
+    display: inline;
+}
+
+.quantidadeCarrinho {
+    display: inline;
+    width: 40px;
+}
+
+.tamanhoTable {
+    width: 100%;
+}
+
+.formulario {
+    width: 50%;
+}
+
+td {
+    width: 25%;
+}
+
+.botaoApagar {
+    width: 5%;
+}
+
+.centralizandoTds {
+    text-align: center;
+    vertical-align: middle;
+}
+
