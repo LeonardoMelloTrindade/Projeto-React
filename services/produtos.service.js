@@ -9,18 +9,14 @@ export default class ProdutoService {
       });
     }
   
-    async get(page, limit) {
+    async get(filter) {
       return axios.get(`http://localhost:3000/produtos`, {
         params:{
-          page: page,
-          limit: limit
+          filter: filter
         }
       });
     }
-  
-    async get() {
-      return axios.get('http://localhost:3000/produtos');
-    }
+
   
     async delete(id) {
       return axios.delete(`http://localhost:3000/carrinho/${id}`);

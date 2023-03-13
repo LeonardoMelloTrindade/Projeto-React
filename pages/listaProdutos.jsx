@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { BsFillBagPlusFill } from "react-icons/bs";
 import './listaProdutos.css';
+import ProdutoService from "../services/produtos.service";
 
 
 export default function listaProdutos() {
-    const arrayTeste = [1, 2, 3, 4, 5]
+    const arrayTeste = [1, 2, 3, 4, 5];
+    const [produtos, setProdutos] = []
+    const produtoService = new ProdutoService();
 
+    useEffect(() => {
+        produtoService.get('Modulo').then((res) => {
+            console.log(res.data.data)
+          })
+    }, [])
+    
 
+    const addItemCarrinho = (teste) => {
+        localStorage.setItem(teste, 'oi')
+    }
 
     return (
         <>
@@ -41,7 +53,7 @@ export default function listaProdutos() {
 
                                 type='radio'
                                 id='default-radio'
-                                label='Inversores'
+                                label='Estação de Recarga'
                             />
                         </div>
                     </Form>
@@ -59,26 +71,16 @@ export default function listaProdutos() {
                                             Código: CVBEC-MO-220V-7.4KW
                                         </Card.Text>
                                         <hr />
-                                        <div className="d-flex">
+                                        <div className="d-flex justify-content-between">
 
-                                            <Col className="d-flex justify-content-center">
-                                                <Button href="/carrinho" variant="danger">
+                                            <Col className="">
+                                                <Button onClick={() => addItemCarrinho(teste)}   variant="danger">
                                                     <BsFillBagPlusFill />
                                                 </Button>
                                             </Col>
-
-                                            <Row>
-                                                Quantidade disponível: 999
-                                                <Col>
-                                                    <button className="botaoCarrinho">-</button>
-                                                    <input type="text" disabled className="quantidadeCarrinho" />
-                                                    <button className="botaoCarrinho">+</button>
-                                                </Col>
-
-                                            </Row>
-
-
-
+                                            <Col>
+                                                <p>Valor: R$ 199,99</p>
+                                            </Col>
 
                                         </div>
 

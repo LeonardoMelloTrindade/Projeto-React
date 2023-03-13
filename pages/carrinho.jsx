@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Row, Table, Form, Button } from 'react-bootstrap';
 import './carrinho.css'
 
 export default function carrinho() {
+
+    const [quantidade, setQuantidade] = useState(1);
+    const [quantidadeDisponivel, setQuantidadeDisponivel] = useState(999);
+
+    const decrementarQuantidade = () => {
+        if (quantidade > 1) {
+            setQuantidade(quantidade - 1);
+            setQuantidadeDisponivel(quantidadeDisponivel + 1)
+        }
+    };
+
+    const incrementarQuantidade = () => {
+        setQuantidade(quantidade + 1);
+        setQuantidadeDisponivel(quantidadeDisponivel - 1)
+    };
+
     return (
         <>
 
@@ -28,11 +44,11 @@ export default function carrinho() {
                         </td>
                         <td className='centralizandoTds'>
                             <Row>
-                                Quantidade disponível: 999
+                                Quantidade disponível: {quantidadeDisponivel}
                                 <Col>
-                                    <button className="botaoCarrinho">-</button>
-                                    <input type="text" disabled className="quantidadeCarrinho" />
-                                    <button className="botaoCarrinho">+</button>
+                                    <button className="botaoCarrinho" onClick={decrementarQuantidade}>-</button>
+                                    <input type="text" disabled className="quantidadeCarrinho" value={quantidade}  />
+                                    <button className="botaoCarrinho" onClick={incrementarQuantidade}>+</button>
                                 </Col>
 
                             </Row>
