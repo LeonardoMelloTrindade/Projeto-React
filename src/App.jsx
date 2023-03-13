@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path='/produtos' element={<ListaProdutos />} />
           <Route path='/carrinho' element={<Carrinho />} />
-          <Route path='/confirmacao' element={<TelaConfirmacao />} />
+          <Route path='/carrinho/confirmacao' element={<TelaConfirmacao />} />
         </Routes>
 
       </Router>

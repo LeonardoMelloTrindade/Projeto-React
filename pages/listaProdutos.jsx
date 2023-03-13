@@ -37,25 +37,26 @@ export default function listaProdutos() {
                     <p className=" fs-1">Categoria</p>
 
                     <Form>
-                        <div key={`default-radio`} className="mb-3">
                             <Form.Check
                                 type='radio'
-                                id='default'
+                                id='radio1'
                                 label='Todos'
+                                name='categoria'
                             />
                             <Form.Check
                                 type='radio'
-                                id='default-radio'
+                                id='radio2'
                                 label='Módulos'
+                                name='categoria'
                             />
 
                             <Form.Check
 
                                 type='radio'
-                                id='default-radio'
+                                id='radio3'
                                 label='Estação de Recarga'
+                                name='categoria'
                             />
-                        </div>
                     </Form>
 
                 </Col>
