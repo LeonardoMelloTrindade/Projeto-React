@@ -20,6 +20,8 @@ function App() {
 
       </Router>
 
+      <button href='/produtos'>ir</button>
+
     </>
   )
 }

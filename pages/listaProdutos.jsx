@@ -6,16 +6,17 @@ import ProdutoService from "../services/produtos.service";
 
 
 export default function listaProdutos() {
-    const arrayTeste = [1, 2, 3, 4, 5];
-    const [produtos, setProdutos] = []
+    
+    const [produtos, setProdutos] = useState([]);
     const produtoService = new ProdutoService();
 
     useEffect(() => {
-        produtoService.get('Modulo').then((res) => {
-            console.log(res.data.data)
-          })
+        produtoService.get().then((res) => {
+            console.log(res.data.data);
+            setProdutos(res.data.data);
+        })
     }, [])
-    
+
 
     const addItemCarrinho = (teste) => {
         localStorage.setItem(teste, 'oi')
@@ -37,50 +38,51 @@ export default function listaProdutos() {
                     <p className=" fs-1">Categoria</p>
 
                     <Form>
-                            <Form.Check
-                                type='radio'
-                                id='radio1'
-                                label='Todos'
-                                name='categoria'
-                            />
-                            <Form.Check
-                                type='radio'
-                                id='radio2'
-                                label='Módulos'
-                                name='categoria'
-                            />
+                        <Form.Check
+                            defaultChecked
+                            type='radio'
+                            id='radio1'
+                            label='Todos'
+                            name='categoria'
+                        />
+                        <Form.Check
+                            type='radio'
+                            id='radio2'
+                            label='Módulos'
+                            name='categoria'
+                        />
 
-                            <Form.Check
+                        <Form.Check
 
-                                type='radio'
-                                id='radio3'
-                                label='Estação de Recarga'
-                                name='categoria'
-                            />
+                            type='radio'
+                            id='radio3'
+                            label='Estação de Recarga'
+                            name='categoria'
+                        />
                     </Form>
 
                 </Col>
                 <Col md='6'>
                     <Row className='flex-wrap mt-4 p-2'>
-                        {arrayTeste.map(teste => {
+                        {produtos.map(produto => {
                             return (
-                                <Card style={{ width: '18rem' }} className='cards' key={teste}>
-                                    <Card.Img variant="top" src="https://belenergy.com.br/wp-content/uploads/2022/09/CARREGADOR-1-244x300.png.webp" />
+                                <Card style={{ width: '18rem' }} className='cards' key={produto._id}>
+                                    <Card.Img variant="top" src={produto.imagem} className='tamanhoImagem'/>
                                     <Card.Body>
-                                        <Card.Title>Estação de Recarga Veicular BelEnergy BelCharger 7,4KW</Card.Title>
+                                        <Card.Title>{produto.nome}</Card.Title>
                                         <Card.Text>
-                                            Código: CVBEC-MO-220V-7.4KW
+                                            {produto.codigo}
                                         </Card.Text>
                                         <hr />
                                         <div className="d-flex justify-content-between">
 
                                             <Col className="">
-                                                <Button onClick={() => addItemCarrinho(teste)}   variant="danger">
+                                                <Button onClick={() => addItemCarrinho(produto)} variant="danger">
                                                     <BsFillBagPlusFill />
                                                 </Button>
                                             </Col>
                                             <Col>
-                                                <p>Valor: R$ 199,99</p>
+                                                <p>Valor: R$ {produto.preco}</p>
                                             </Col>
 
                                         </div>
