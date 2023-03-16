@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Row, Table, Form, Button } from 'react-bootstrap';
 import './carrinho.css'
 
@@ -6,6 +6,7 @@ export default function carrinho() {
 
     const [quantidade, setQuantidade] = useState(1);
     const [quantidadeDisponivel, setQuantidadeDisponivel] = useState(999);
+    const [itensCarrinho, setItensCarrinho] = useState([]);
 
     const decrementarQuantidade = () => {
         if (quantidade > 1) {
@@ -19,6 +20,17 @@ export default function carrinho() {
         setQuantidadeDisponivel(quantidadeDisponivel - 1)
     };
 
+    useEffect(() => {
+        const itens = [];
+        let i = 1;
+        while (localStorage.getItem(i)) {
+          const item = JSON.parse(localStorage.getItem(i));
+          itens.push(item);
+          i++;
+        }
+        setItensCarrinho(itens);
+      }, []);
+
     return (
         <>
 
@@ -31,29 +43,33 @@ export default function carrinho() {
             </Row>
             <Table striped size="sm" className='tamanhoTable' bordered hover>
                 <tbody>
-                    <tr>
-                        <td className='botaoApagar centralizandoTds'>
-                            <button>X</button>
-                        </td>
-                        <td>
-                            <img className='imagemCarrinho' src='https://belenergy.com.br/wp-content/uploads/2022/09/CARREGADOR-1-244x300.png.webp' />
-                            <p>Estação de Recarga Veicular BelEnergy BelCharger 7,4KW</p>
-                        </td>
-                        <td className='centralizandoTds'>
-                            R$100,00
-                        </td>
-                        <td className='centralizandoTds'>
-                            <Row>
-                                Quantidade disponível: {quantidadeDisponivel}
-                                <Col>
-                                    <button className="botaoCarrinho" onClick={decrementarQuantidade}>-</button>
-                                    <input type="text" disabled className="quantidadeCarrinho" value={quantidade}  />
-                                    <button className="botaoCarrinho" onClick={incrementarQuantidade}>+</button>
-                                </Col>
+                    {itensCarrinho.map(item => {
+                        return (
+                            <tr key={item._id}>
+                                <td className='botaoApagar centralizandoTds'>
+                                    <button>X</button>
+                                </td>
+                                <td>
+                                    <img className='imagemCarrinho' src={item.imagem} />
+                                    <p>{item.nome}</p>
+                                </td>
+                                <td className='centralizandoTds'>
+                                    R${item.preco}
+                                </td>
+                                <td className='centralizandoTds'>
+                                    <Row>
+                                        Quantidade disponível: {quantidadeDisponivel}
+                                        <Col>
+                                            <button className="botaoCarrinho" onClick={decrementarQuantidade}>-</button>
+                                            <input type="text" disabled className="quantidadeCarrinho" value={quantidade} />
+                                            <button className="botaoCarrinho" onClick={incrementarQuantidade}>+</button>
+                                        </Col>
 
-                            </Row>
-                        </td>
-                    </tr>
+                                    </Row>
+                                </td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </Table>
 

@@ -6,20 +6,23 @@ import ProdutoService from "../services/produtos.service";
 
 
 export default function listaProdutos() {
-    
+    var chaveLocalStorage = 0;
     const [produtos, setProdutos] = useState([]);
+    const [categoria, setCategoria] = useState('');
     const produtoService = new ProdutoService();
 
     useEffect(() => {
-        produtoService.get().then((res) => {
+        produtoService.get(categoria).then((res) => {
             console.log(res.data.data);
             setProdutos(res.data.data);
         })
-    }, [])
+    }, [categoria])
 
 
     const addItemCarrinho = (teste) => {
-        localStorage.setItem(teste, 'oi')
+        chaveLocalStorage += 1
+        console.log(chaveLocalStorage)
+        localStorage.setItem(chaveLocalStorage, teste)
     }
 
     return (
@@ -29,6 +32,11 @@ export default function listaProdutos() {
                     <p className="text-center fs-1">
                         Nossos Produtos
                     </p>
+                </Col>
+                <Col>
+                    <Button href="/carrinho" variant="danger">
+                        <BsFillBagPlusFill />
+                    </Button>
                 </Col>
             </Row>
             <hr />
@@ -44,12 +52,14 @@ export default function listaProdutos() {
                             id='radio1'
                             label='Todos'
                             name='categoria'
+                            onClick={() => setCategoria('Todos')}
                         />
                         <Form.Check
                             type='radio'
                             id='radio2'
                             label='Módulos'
                             name='categoria'
+                            onClick={() => setCategoria('Modulo')}
                         />
 
                         <Form.Check
@@ -58,6 +68,7 @@ export default function listaProdutos() {
                             id='radio3'
                             label='Estação de Recarga'
                             name='categoria'
+                            onClick={() => setCategoria('EstacaoDeRecarga')}
                         />
                     </Form>
 
@@ -67,7 +78,7 @@ export default function listaProdutos() {
                         {produtos.map(produto => {
                             return (
                                 <Card style={{ width: '18rem' }} className='cards' key={produto._id}>
-                                    <Card.Img variant="top" src={produto.imagem} className='tamanhoImagem'/>
+                                    <Card.Img variant="top" src={produto.imagem} className='tamanhoImagem' />
                                     <Card.Body>
                                         <Card.Title>{produto.nome}</Card.Title>
                                         <Card.Text>
@@ -77,7 +88,7 @@ export default function listaProdutos() {
                                         <div className="d-flex justify-content-between">
 
                                             <Col className="">
-                                                <Button onClick={() => addItemCarrinho(produto)} variant="danger">
+                                                <Button onClick={() => addItemCarrinho(JSON.stringify(produto))} variant="danger">
                                                     <BsFillBagPlusFill />
                                                 </Button>
                                             </Col>
