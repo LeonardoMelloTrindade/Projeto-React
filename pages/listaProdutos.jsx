@@ -21,7 +21,6 @@ export default function listaProdutos() {
 
     const addItemCarrinho = (teste) => {
         chaveLocalStorage += 1
-        console.log(chaveLocalStorage)
         localStorage.setItem(chaveLocalStorage, teste)
     }
 

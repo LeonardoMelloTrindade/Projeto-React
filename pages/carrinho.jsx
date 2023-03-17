@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Table, Form, Button } from 'react-bootstrap';
+import ProdutoService from "../services/produtos.service";
 import './carrinho.css'
 
 export default function carrinho() {
@@ -7,6 +8,15 @@ export default function carrinho() {
     const [quantidade, setQuantidade] = useState(1);
     const [quantidadeDisponivel, setQuantidadeDisponivel] = useState(999);
     const [itensCarrinho, setItensCarrinho] = useState([]);
+    const produtoService = new ProdutoService();
+    const [formData, setFormData] = useState({
+        nome: '',
+        email: '',
+        endereco: '',
+        cidade: '',
+        estado: '',
+        cep: ''
+      });
 
     const decrementarQuantidade = () => {
         if (quantidade > 1) {
@@ -20,16 +30,23 @@ export default function carrinho() {
         setQuantidadeDisponivel(quantidadeDisponivel - 1)
     };
 
+    async function handleSubmit(event) {
+        event.preventDefault();
+        const confirmPedido = await produtoService.create(itensCarrinho, formData);
+        console.log(confirmPedido);
+
+    }
+
     useEffect(() => {
         const itens = [];
         let i = 1;
         while (localStorage.getItem(i)) {
-          const item = JSON.parse(localStorage.getItem(i));
-          itens.push(item);
-          i++;
+            const item = JSON.parse(localStorage.getItem(i));
+            itens.push(item);
+            i++;
         }
         setItensCarrinho(itens);
-      }, []);
+    }, []);
 
     return (
         <>
@@ -49,11 +66,11 @@ export default function carrinho() {
                                 <td className='botaoApagar centralizandoTds'>
                                     <button>X</button>
                                 </td>
-                                <td>
+                                <td key={item.nome}>
                                     <img className='imagemCarrinho' src={item.imagem} />
                                     <p>{item.nome}</p>
                                 </td>
-                                <td className='centralizandoTds'>
+                                <td key={item.preco} className='centralizandoTds'>
                                     R${item.preco}
                                 </td>
                                 <td className='centralizandoTds'>
@@ -61,7 +78,7 @@ export default function carrinho() {
                                         Quantidade disponível: {quantidadeDisponivel}
                                         <Col>
                                             <button className="botaoCarrinho" onClick={decrementarQuantidade}>-</button>
-                                            <input type="text" disabled className="quantidadeCarrinho" value={quantidade} />
+                                            <input type="text" className="quantidadeCarrinho" value={quantidade} />
                                             <button className="botaoCarrinho" onClick={incrementarQuantidade}>+</button>
                                         </Col>
 
@@ -74,62 +91,101 @@ export default function carrinho() {
             </Table>
 
 
-            <Form className="delivery-form">
-                <h2>Para seguir, defina um endereço de entrega:</h2>
-                <hr />
-                <Row>
-                    <Col md={6}>
-                        <Form.Group controlId="formBasicName">
-                            <Form.Label>Nome</Form.Label>
-                            <Form.Control required type="text" placeholder="Digite o nome completo" />
-                        </Form.Group>
-                    </Col>
-
-                    <Col md={6}>
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control required type="email" placeholder="Digite o email" />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col md={6}>
-                        <Form.Group controlId="formBasicAddress">
-                            <Form.Label>Endereço</Form.Label>
-                            <Form.Control required type="text" placeholder="Digite o endereço completo" />
-                        </Form.Group>
-                    </Col>
-
-                    <Col md={6}>
-                        <Form.Group controlId="formBasicCity">
-                            <Form.Label>Cidade</Form.Label>
-                            <Form.Control required type="text" placeholder="Digite a cidade" />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col md={4}>
-                        <Form.Group controlId="formBasicState">
-                            <Form.Label>Estado</Form.Label>
-                            <Form.Control required type="text" placeholder="Digite o estado" />
-                        </Form.Group>
-                    </Col>
-
-                    <Col md={4}>
-                        <Form.Group controlId="formBasicZip">
-                            <Form.Label>CEP</Form.Label>
-                            <Form.Control required type="text" placeholder="Digite o CEP" />
-                        </Form.Group>
-                    </Col>
-                </Row>
-            </Form>
-
-            <div className='d-flex justify-content-center mt-5'>
-                <Button href='/confirmacao' variant="danger">Confirmar Compra</Button>
-            </div>
-
+            <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formBasicName">
+        <Form.Label>Nome</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Digite o nome completo"
+          value={formData.nome}
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              nome: event.target.value
+            })
+          }
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicEmail">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Digite o email"
+          value={formData.email}
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              email: event.target.value
+            })
+          }
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicAddress">
+        <Form.Label>Endereço</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Digite o endereço completo"
+          value={formData.endereco}
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              endereco: event.target.value
+            })
+          }
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicCity">
+        <Form.Label>Cidade</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Digite a cidade"
+          value={formData.cidade}
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              cidade: event.target.value
+            })
+          }
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicState">
+        <Form.Label>Estado</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Digite o estado"
+          value={formData.estado}
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              estado: event.target.value
+            })
+          }
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicZip">
+        <Form.Label>CEP</Form.Label>
+        <Form.Control
+          type="number"
+          placeholder="Digite o CEP"
+          value={formData.cep}
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              cep: event.target.value
+            })
+          }
+          required
+        />
+      </Form.Group>
+      <Button type="submit" variant="danger">
+        Confirmar Compra
+      </Button>
+    </Form>
         </>
     )
 }
