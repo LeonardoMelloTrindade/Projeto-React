@@ -2,8 +2,12 @@ import axios from 'axios';
 
 export default class ProdutoService {
   async create(itensPedido, endereco) {
-    console.log(itensPedido)
-    console.log(endereco)
+    const novoArray = itensPedido.map(objeto => {
+      const { imagem, ...novoObjeto } = objeto;
+      return novoObjeto;
+    });
+    
+    console.log(novoArray)
     return axios.post('http://localhost:3000/carrinho', {
       itensPedido: itensPedido,
       endereco: endereco
