@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation } from "react-router-dom";
 import { Alert, Col, Row, Button, Container, ListGroup } from 'react-bootstrap';
 
 export default function telaConfirmacao() {
+
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const param1 = params.get("param1");
+    const param2 = params.get("param2");
+    useEffect(() => {
+    console.log(param1)
+    console.log(param2)
+    }, [])
+
     return (
         <>
             <Row>

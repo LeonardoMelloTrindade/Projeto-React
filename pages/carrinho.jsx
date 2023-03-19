@@ -33,14 +33,12 @@ export default function carrinho() {
   async function handleSubmit(event) {
     event.preventDefault();
     const confirmPedido = await produtoService.create(itensCarrinho, formData);
-    console.log(confirmPedido)
-  }
-
-  const handleSubmitAndRedirect = (event) => {
-    event.preventDefault();
-    const form = event.target.form;
-      form.submit();
-      window.location.href = "/carrinho/confirmacao";
+    if (confirmPedido.status === 200) {
+      const params = new URLSearchParams();
+      params.append("param1", itensCarrinho);
+      params.append("param2", formData);
+      window.location.href = "http://localhost:5173/carrinho/confirmacao?" + params.toString();
+    }
   }
 
   useEffect(() => {
@@ -80,7 +78,7 @@ export default function carrinho() {
                   R${item.preco}
                 </td>
                 <td className='centralizandoTds'>
-                  <Row>
+                  <Row className='m-2'>
                     Quantidade disponível: {quantidadeDisponivel}
                     <Col>
                       <button className="botaoCarrinho" onClick={decrementarQuantidade}>-</button>
@@ -188,7 +186,7 @@ export default function carrinho() {
             required
           />
         </Form.Group>
-        <Button type="submit" variant="danger" onClick={handleSubmitAndRedirect}>
+        <Button type="submit" variant="danger">
           Confirmar Compra
         </Button>
       </Form>
