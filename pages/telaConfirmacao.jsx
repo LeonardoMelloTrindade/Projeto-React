@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react'
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
 import { Alert, Col, Row, Button, Container, ListGroup } from 'react-bootstrap';
 
 export default function telaConfirmacao() {
 
-    const location = useLocation();
-    const params = new URLSearchParams(location.search);
-    const param1 = params.get("param1");
-    const param2 = params.get("param2");
+    const [itensPedido, setItensPedido] = useState([]);
+    const [endereco, setEndereco] = useState({})
+
     useEffect(() => {
-    console.log(param1)
-    console.log(param2)
-    }, [])
+        const itens = [];
+        let i = 1;
+        while (localStorage.getItem(i)) {
+          const item = JSON.parse(localStorage.getItem(i));
+          itens.push(item);
+          i++;
+        }
+        setItensPedido(itens);
+
+      }, []);
 
     return (
         <>

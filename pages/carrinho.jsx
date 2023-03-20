@@ -32,14 +32,17 @@ export default function carrinho() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    localStorage.setItem('endereco', formData)
     const confirmPedido = await produtoService.create(itensCarrinho, formData);
+    console.log(confirmPedido.status);
     if (confirmPedido.status === 200) {
-      const params = new URLSearchParams();
-      params.append("param1", itensCarrinho);
-      params.append("param2", formData);
-      window.location.href = "http://localhost:5173/carrinho/confirmacao?" + params.toString();
+      window.location.href = "http://localhost:5173/carrinho/confirmacao";
     }
   }
+
+  const addItenStorage = (teste) => {
+    localStorage.setItem(chaveLocalStorage, teste)
+}
 
   useEffect(() => {
     const itens = [];
