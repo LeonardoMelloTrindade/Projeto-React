@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ListaProdutos from '../pages/listaProdutos';
-import Carrinho from '../pages/carrinho';
-import TelaConfirmacao from '../pages/telaConfirmacao';
+import ListaProdutos from './pages/listaProdutos';
+import Carrinho from './pages/carrinho';
+import TelaConfirmacao from './pages/telaConfirmacao';
 import './App.css'
 
 function App() {

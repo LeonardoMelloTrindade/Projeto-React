@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Alert, Col, Row, Button, Container, ListGroup } from 'react-bootstrap';
+import UseCarrinhoContext from '../hook/useCarrinhoContext';
 
 export default function telaConfirmacao() {
+
+    const { formData } = UseCarrinhoContext()
 
     const [itensPedido, setItensPedido] = useState([]);
     const [endereco, setEndereco] = useState({})
@@ -10,13 +13,13 @@ export default function telaConfirmacao() {
         const itens = [];
         let i = 1;
         while (localStorage.getItem(i)) {
-          const item = JSON.parse(localStorage.getItem(i));
-          itens.push(item);
-          i++;
+            const item = JSON.parse(localStorage.getItem(i));
+            itens.push(item);
+            i++;
         }
         setItensPedido(itens);
 
-      }, []);
+    }, []);
 
     return (
         <>
@@ -35,27 +38,26 @@ export default function telaConfirmacao() {
                 <Col>
                     <h3>Endereço de entrega</h3>
                     <Alert variant='info' key='info'>
+                            <h4>Nome: </h4>
+                            <p>{formData.nome}</p>
 
-                        <h4>Nome: </h4>
-                        <p>Leonardo Mello</p>
+                            <h4>Email: </h4>
+                            <p>{formData.email}</p>
 
-                        <h4>Email: </h4>
-                        <p>leo11madara@gmail.com</p>
+                            <h4>Endereço: </h4>
+                            <p>Rua José Francisco</p>
 
-                        <h4>Endereço: </h4>
-                        <p>Rua José Francisco</p>
+                            <h4>Cidade: </h4>
+                            <p>Arraial do Cabo</p>
 
-                        <h4>Cidade: </h4>
-                        <p>Arraial do Cabo</p>
+                            <h4>Estado: </h4>
+                            <p>Rio de Janeiro</p>
 
-                        <h4>Estado: </h4>
-                        <p>Rio de Janeiro</p>
+                            <h4>Endereço: </h4>
+                            <p>Rua José Francisco</p>
 
-                        <h4>Endereço: </h4>
-                        <p>Rua José Francisco</p>
-
-                        <h4>CEP: </h4>
-                        <p>28930-000</p>
+                            <h4>CEP: </h4>
+                            <p>28930-000</p>
                     </Alert>
                 </Col>
                 <Col>
