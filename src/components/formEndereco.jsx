@@ -29,7 +29,7 @@ export default function formEndereco() {
     return (
         <>
 
-            <Endereco.Provider value={formData}>
+            <Endereco.Consumer value={formData}>
 
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicName">
@@ -126,7 +126,7 @@ export default function formEndereco() {
                         Confirmar Compra
                     </Button>
                 </Form>
-            </Endereco.Provider>
+            </Endereco.Consumer>
 
         </>
     )

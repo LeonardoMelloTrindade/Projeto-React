@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Table, Form, Button } from 'react-bootstrap';
 import ProdutoService from "../services/produtos.service";
+import useCarrinhoContext from '../hook/useCarrinhoContext';
 import './carrinho.css'
-import CarrinhoProvider from '../context/CarrinhoProvider';
 
 export default function carrinho() {
+
+  const { formData, setFormData } = useCarrinhoContext()
 
   const [quantidade, setQuantidade] = useState(1);
   const [quantidadeDisponivel, setQuantidadeDisponivel] = useState(999);
@@ -25,15 +27,12 @@ export default function carrinho() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    localStorage.setItem('formData', JSON.stringify(formData));
     const confirmPedido = await produtoService.create(itensCarrinho, formData);
     console.log(confirmPedido.status);
     if (confirmPedido.status === 200) {
       window.location.href = "http://localhost:5173/carrinho/confirmacao";
     }
-  }
-
-  const addItenStorage = (teste) => {
-    localStorage.setItem(chaveLocalStorage, teste)
   }
 
   useEffect(() => {
@@ -76,9 +75,9 @@ export default function carrinho() {
                   <Row className='m-2'>
                     Quantidade disponível: {quantidadeDisponivel}
                     <Col>
-                      <button className="botaoCarrinho" onClick={decrementarQuantidade}>-</button>
+                      <Button className="botaoCarrinho" onClick={decrementarQuantidade}>-</Button>
                       <input type="text" className="quantidadeCarrinho" value={quantidade} />
-                      <button className="botaoCarrinho" onClick={incrementarQuantidade}>+</button>
+                      <Button className="botaoCarrinho" onClick={incrementarQuantidade}>+</Button>
                     </Col>
 
                   </Row>
@@ -89,7 +88,6 @@ export default function carrinho() {
         </tbody>
       </Table>
 
-      <CarrinhoProvider>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicName">
             <Form.Label>Nome</Form.Label>
@@ -185,7 +183,6 @@ export default function carrinho() {
             Confirmar Compra
           </Button>
         </Form>
-      </CarrinhoProvider>
     </>
   )
 }

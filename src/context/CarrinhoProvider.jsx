@@ -1,6 +1,7 @@
+import React, { useState } from 'react';
 import { CarrinhoContext } from "./CarrinhoContext"
 
-export default function CarrinhoProvider([ children ]) {
+export default function CarrinhoProvider({ children }) {
     const [formData, setFormData] = useState({
         nome: '',
         email: '',
@@ -8,11 +9,11 @@ export default function CarrinhoProvider([ children ]) {
         cidade: '',
         estado: '',
         cep: ''
-      });
+    });
 
-    return(
-        <CarrinhoContext.Provider value={{formData, setFormData}}>
-             {children}
+    return (
+        <CarrinhoContext.Provider value={{ formData, setFormData }}>
+            { children }
         </CarrinhoContext.Provider>
     )
 }
