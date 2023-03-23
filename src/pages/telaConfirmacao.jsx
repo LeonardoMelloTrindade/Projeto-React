@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, Col, Row, Button, Container, ListGroup } from 'react-bootstrap';
+import useCarrinhoContext from '../hook/useCarrinhoContext';
 
 export default function telaConfirmacao() {
 
+    const { formData, setFormData } = useCarrinhoContext()
+
     const [itensPedido, setItensPedido] = useState([]);
-    const [endereco, setEndereco] = useState({})
 
     useEffect(() => {
+        const savedFormData = JSON.parse(localStorage.getItem('formData'));
+        if (savedFormData) {
+            setFormData(savedFormData);
+            localStorage.removeItem('formData')
+        }
         const itens = [];
-        let i = 1;
-        while (localStorage.getItem(i)) {
-          const item = JSON.parse(localStorage.getItem(i));
-          itens.push(item);
-          i++;
+        let index = 1;
+        while (localStorage.getItem(index)) {
+            const item = JSON.parse(localStorage.getItem(index));
+            itens.push(item);
+            localStorage.removeItem('index')
+            index++;
         }
         setItensPedido(itens);
-
-      }, []);
+    }, []);
 
     return (
         <>
@@ -35,38 +42,36 @@ export default function telaConfirmacao() {
                 <Col>
                     <h3>Endereço de entrega</h3>
                     <Alert variant='info' key='info'>
-
                         <h4>Nome: </h4>
-                        <p>Leonardo Mello</p>
+                        <p>{formData.nome}</p>
 
                         <h4>Email: </h4>
-                        <p>leo11madara@gmail.com</p>
+                        <p>{formData.email}</p>
 
                         <h4>Endereço: </h4>
-                        <p>Rua José Francisco</p>
+                        <p>{formData.endereco}</p>
 
                         <h4>Cidade: </h4>
-                        <p>Arraial do Cabo</p>
+                        <p>{formData.cidade}</p>
 
                         <h4>Estado: </h4>
-                        <p>Rio de Janeiro</p>
-
-                        <h4>Endereço: </h4>
-                        <p>Rua José Francisco</p>
+                        <p>{formData.estado}</p>
 
                         <h4>CEP: </h4>
-                        <p>28930-000</p>
+                        <p>{formData.cep}</p>
                     </Alert>
                 </Col>
                 <Col>
                     <h3>Produtos Comprados</h3>
                     <Alert variant='dark' key='dark'>
                         <ListGroup>
-                            <ListGroup.Item className='p-4'>Estação de Recarga Veicular BelEnergy BelCharger 7,4KW: R$199,99</ListGroup.Item>
-                            <ListGroup.Item className='p-4'>Dapibus ac facilisis in</ListGroup.Item>
-                            <ListGroup.Item className='p-4'>Morbi leo risus</ListGroup.Item>
-                            <ListGroup.Item className='p-4'>Porta ac consectetur ac</ListGroup.Item>
-                            <ListGroup.Item className='p-4'>Vestibulum at eros</ListGroup.Item>
+                            {itensPedido.map(item => {
+                                return (
+                                    <ListGroup.Item key={item._id} className='p-4'>{item.nome}: R${item.preco}</ListGroup.Item>
+                                )
+
+                            })}
+
                         </ListGroup>
 
                         <Row className='mt-5'>
