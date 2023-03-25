@@ -35,23 +35,24 @@ export default function listaProdutos() {
                         Produtos
                     </p>
                 </Col>
-                <Col className=" d-flex justify-content-center">
-                    <div href="/carrinho" variant="danger" className=" carrinho text-center">
-                        <BsCart className="carrinho" />
+                <Col className=" d-flex justify-content-center mr-5">
+                    <div href="/carrinho" variant="danger" className="">
+                        <BsCart className="carrinho" onClick={() => window.location.href = "http://localhost:5173/carrinho"}/>
                     </div>
                 </Col>
             </Row>
-            <hr />
-            <Row >
-                <Col md='4' className='m-5'>
+                <hr />
+            <Row>
+                <Col md='2' className='m-4 boxCategoria'>
 
-                    <p className=" fs-1">Categoria</p>
+                    <p className="fs-1 categoria">Categoria</p>
 
                     <Form>
                         <Form.Check
                             defaultChecked
                             type='radio'
                             id='radio1'
+                            className="selectCategoria"
                             label='Todos'
                             name='categoria'
                             onClick={() => setCategoria('Todos')}
@@ -59,6 +60,7 @@ export default function listaProdutos() {
                         <Form.Check
                             type='radio'
                             id='radio2'
+                            className="selectCategoria"
                             label='Módulos'
                             name='categoria'
                             onClick={() => setCategoria('Modulo')}
@@ -68,46 +70,43 @@ export default function listaProdutos() {
 
                             type='radio'
                             id='radio3'
+                            className="selectCategoria"
                             label='Estação de Recarga'
                             name='categoria'
                             onClick={() => setCategoria('EstacaoDeRecarga')}
                         />
+                        <Form.Check
+
+                            type='radio'
+                            id='radio4'
+                            className="selectCategoria"
+                            label='Cabos'
+                            name='categoria'
+                            onClick={() => setCategoria('Cabos')}
+                        />
                     </Form>
 
                 </Col>
-                <Col md='6'>
+                <Col md='9'>
                     <Row className='flex-wrap mt-4 p-2'>
                         {produtos.map(produto => {
                             return (
                                 <Card style={{ width: '18rem' }} className='cards' key={produto._id}>
-                                    <article class="card">
-                                        <div class="card__inner">
-                                            <div class="card__body card__body--front">
-                                                <Card.Img variant="top" src={produto.imagem} className='tamanhoImagem' />
-                                            </div >
-                                            <div class="card__body card__body--back">
-                                                <h6 class="card__title">
-                                                    A BelEenergy, empresa pioneira no desenvolvimento de tecnologias no mercado de eficiência energética,
-                                                    tem interesse em fornecer mais um produto que contribui para a neutralização de CO2 e inova o conceito de consumo de energia.
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </article>
+                                    <Card.Img variant="top" src={produto.imagem} className='tamanhoImagem' />
                                     <Card.Body>
                                         <Card.Title>{produto.nome}</Card.Title>
-                                        <Card.Text>
-                                            {produto.codigo}
+                                        <Card.Text className="cardCodigo">
+                                            Código: {produto.codigo}
                                         </Card.Text>
                                         <hr />
                                         <div className="d-flex justify-content-between">
 
-                                            <Col className="">
-                                                <Button onClick={() => addItemCarrinho(JSON.stringify(produto))} variant="danger">
-                                                    <BsFillBagPlusFill />
-                                                </Button>
+                                            <Col onClick={() => addItemCarrinho(JSON.stringify(produto))}>
+                                                    <BsFillBagPlusFill className="btnAddCarrinho" />
                                             </Col>
                                             <Col>
-                                                <p>Valor: R$ {produto.preco}</p>
+                                                <div className="preco">Valor:</div>
+                                                <div className="preco">R${produto.preco}</div>
                                             </Col>
 
                                         </div>
