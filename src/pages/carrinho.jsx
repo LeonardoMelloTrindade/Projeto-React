@@ -24,6 +24,12 @@ export default function carrinho() {
     setQuantidadeDisponivel(quantidadeDisponivel - 1);
   };
 
+  const deleteItemCarrinho = (id) => {
+    const novoArray = itensCarrinho.filter(item => item._id !== id);
+    console.log(novoArray)
+    setItensCarrinho(novoArray);
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
     localStorage.setItem('formData', JSON.stringify(formData));
@@ -35,19 +41,27 @@ export default function carrinho() {
   }
 
   useEffect(() => {
-    const itens = [];
-    let i = 1;
-    while (localStorage.getItem(i)) {
-      const item = JSON.parse(localStorage.getItem(i));
-      itens.push(item);
-      i++;
+    //DEPOIS USAR O LOCALSTORAGE COM REMOVEITEM (NOVAMENTE)
+    if (localStorage.length >= 1) {
+      const itens = [];
+      let i = 1;
+      while (localStorage.getItem(i)) {
+        const item = JSON.parse(localStorage.getItem(i));
+        console.log('effect puro')
+        itens.push(item);
+        i++;
+      }
+      setItensCarrinho(itens);
+    } else {
+      console.log('LocalStorage está vazio.')
     }
-    setItensCarrinho(itens);
+
   }, []);
 
   useEffect(() => {
-
-  }, [itensCarrinho]);
+    console.log('entro aq')
+    localStorage.clear();
+  }, [itensCarrinho])
 
   return (
     <>
@@ -67,7 +81,7 @@ export default function carrinho() {
             return (
               <tr key={item._id}>
                 <td className='botaoApagar centralizandoTds'>
-                  <Button variant='danger' id={item._id} onClick>
+                  <Button variant='danger' id={item._id} onClick={() => deleteItemCarrinho(item._id)}>
                     X
                   </Button>
                 </td>
