@@ -1,15 +1,37 @@
+.headerItens {
+    background-color: rgb(72, 100, 167);
+}
+
+.header {
+    font-weight: bolder;
+    font-family: "Lucida Console", monospace;
+}
+
 .imagemCarrinho {
     height: 100px;
     width: 100px;
 }
 .botaoCarrinho {
     width: 25px;
+    margin: 0 5px;
     display: inline;
+    border-radius: 100%;
+    font-weight: bolder;
+}
+
+.btnConfirma {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.valorTotal {
+    font-size: 23px;
 }
 
 .quantidadeCarrinho {
     display: inline;
     width: 40px;
+    height: 32px;
 }
 
 .tamanhoTable {
@@ -24,6 +46,10 @@ td {
     width: 25%;
 }
 
+.bgCliente {
+    background-color: brown;
+}
+
 .botaoApagar {
     width: 5%;
 }
@@ -31,5 +57,13 @@ td {
 .centralizandoTds {
     text-align: center;
     vertical-align: middle;
+}
+
+.colorPreco {
+    color: brown;
+}
+
+.tamamnhoTdImagem {
+    width: 50%;
 }
 

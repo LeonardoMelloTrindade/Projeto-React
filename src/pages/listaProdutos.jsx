@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import { Row, Col, Form, Card } from 'react-bootstrap';
 import { BsFillBagPlusFill, BsCart } from "react-icons/bs";
-import './listaProdutos.css';
 import ProdutoService from "../services/produtos.service";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './listaProdutos.css';
 
 
 export default function listaProdutos() {
@@ -10,6 +12,7 @@ export default function listaProdutos() {
     const [produtos, setProdutos] = useState([]);
     const [categoria, setCategoria] = useState('');
     const produtoService = new ProdutoService();
+    const notify = () => toast.success("Item adicionado ao carrinho!");
 
     useEffect(() => {
         produtoService.get(categoria).then((res) => {
@@ -21,14 +24,15 @@ export default function listaProdutos() {
 
     const addItemCarrinho = (teste) => {
         localStorage.setItem(chaveLocalStorage, teste)
+        notify();
         chaveLocalStorage += 1
     }
 
     return (
         <>
             <Row className='mb-3 pt-4 bg d-flex align-items-center'>
-                <Col className="">
-                    <img src="https://belenergy.com.br/wp-content/themes/belenergy/assets/images/svg/logo-v2.svg" />
+                <Col>
+                    <img src="https://belenergy.com.br/wp-content/themes/belenergy/assets/images/svg/logo-v2.svg" href='/produtos'/>
                 </Col>
                 <Col>
                     <p className="text-center mt-2 fs-1 header">
@@ -36,17 +40,17 @@ export default function listaProdutos() {
                     </p>
                 </Col>
                 <Col className=" d-flex justify-content-center mr-5">
-                    <div href="/carrinho" variant="danger" className="">
-                        <BsCart className="carrinho" onClick={() => window.location.href = "http://localhost:5173/carrinho"}/>
+                    <div href="/carrinho" variant="danger">
+                        <BsCart className="carrinho" onClick={() => window.location.href = "http://localhost:5173/carrinho"} />
                     </div>
                 </Col>
             </Row>
-                <hr />
+            <hr />
             <Row>
                 <Col md='2' className='m-4 boxCategoria'>
 
                     <p className="fs-1 categoria">Categoria</p>
-
+                    <hr />
                     <Form>
                         <Form.Check
                             defaultChecked
@@ -102,7 +106,7 @@ export default function listaProdutos() {
                                         <div className="d-flex justify-content-between">
 
                                             <Col onClick={() => addItemCarrinho(JSON.stringify(produto))}>
-                                                    <BsFillBagPlusFill className="btnAddCarrinho" />
+                                                <BsFillBagPlusFill className="btnAddCarrinho" />
                                             </Col>
                                             <Col>
                                                 <div className="preco">Valor:</div>
@@ -115,6 +119,19 @@ export default function listaProdutos() {
                                 </Card>
                             )
                         })}
+
+                        <ToastContainer
+                            position="bottom-right"
+                            autoClose={3500}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                        />
 
                     </Row>
                 </Col>

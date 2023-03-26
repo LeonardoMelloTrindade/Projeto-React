@@ -20,7 +20,8 @@
 }
 
 .carrinho:hover {
-    color: white;
+    color: rgb(247, 199, 52);
+	transition: 0.7s;
 }
 
 .preco {
@@ -37,7 +38,7 @@
 }
 
 .btnAddCarrinho:hover { 
-	color: rgb(247, 199, 52);;
+	color: rgb(247, 199, 52);
 	transition: 0.7s;
 }
 
@@ -48,6 +49,8 @@
 
 .cardCodigo {
 	font-size: 12px;
+    font-weight: bolder;
+    color: rgb(63, 63, 63);
 }
 
 .cards:hover {
@@ -69,8 +72,12 @@
     height: 20em;
 }
 
+.tamanhoImagem:hover {
+    transform: scale(1.05);
+    transition: 1.2s;
+}
+
 .boxCategoria {
-	background-color: rgb(213, 219, 219);
 	border-radius: 25px;
 	height: 600px;
 	margin-left: 5px;

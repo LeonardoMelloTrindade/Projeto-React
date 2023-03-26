@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, Col, Row, Button, Container, ListGroup } from 'react-bootstrap';
+import { Alert, Col, Row, Button, Container } from 'react-bootstrap';
 import useCarrinhoContext from '../hook/useCarrinhoContext';
+import './telaConfirmacao.css'
 
 export default function telaConfirmacao() {
 
     const { formData, setFormData } = useCarrinhoContext()
 
     const [itensPedido, setItensPedido] = useState([]);
+    let valorTotal = 0;
 
     useEffect(() => {
         const savedFormData = JSON.parse(localStorage.getItem('formData'));
@@ -28,7 +30,7 @@ export default function telaConfirmacao() {
     return (
         <>
             <Row>
-                <Alert key='success' variant='success' className='text-center'>
+                <Alert key='success' variant='success' className='text-center header'>
                     <h2>Compra realizada com sucesso.</h2>
                 </Alert>
             </Row>
@@ -40,7 +42,7 @@ export default function telaConfirmacao() {
 
             <Row className='d-flex justify-content-between'>
                 <Col>
-                    <h3>Endereço de entrega</h3>
+                    <h3>informações do cliente</h3>
                     <Alert variant='info' key='info'>
                         <h4>Nome: </h4>
                         <p>{formData.nome}</p>
@@ -64,18 +66,20 @@ export default function telaConfirmacao() {
                 <Col>
                     <h3>Produtos Comprados</h3>
                     <Alert variant='dark' key='dark'>
-                        <ListGroup>
+                        <ol type='I'>
                             {itensPedido.map(item => {
+                                valorTotal += parseFloat(item.preco);
                                 return (
-                                    <ListGroup.Item key={item._id} className='p-4'>{item.nome}: R${item.preco}</ListGroup.Item>
+                                    <li key={item._id} className='p-3'>{item.nome}: <span className='colorPreco'>R${item.preco}</span></li>
                                 )
 
                             })}
 
-                        </ListGroup>
+                        </ol>
+                        <hr/>
 
-                        <Row className='mt-5'>
-                            <h4 className='text-end'>Valor total da compra: R$645,43</h4>
+                        <Row className='mt-3'>
+                            <h4 className='text-end'>Valor total da compra: <span className='colorPreco'>R${valorTotal.toFixed(2)}</span></h4>
                         </Row>
                     </Alert>
 
