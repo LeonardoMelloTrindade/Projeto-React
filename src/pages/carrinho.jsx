@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row, Table, Form, Button, FloatingLabel } from 'react-bootstrap';
 import ProdutoService from "../services/produtos.service";
 import useCarrinhoContext from '../hook/useCarrinhoContext';
+import { BsArrowLeftCircle } from "react-icons/bs";
 import './carrinho.css';
 
 export default function carrinho() {
@@ -66,6 +67,22 @@ export default function carrinho() {
   return (
     <>
 
+      <Row className='mb-3 pt-4 bg d-flex align-items-center'>
+        <Col className='d-flex justify-content-center'>
+          <div href="/carrinho" variant="danger">
+            <BsArrowLeftCircle className="carrinho" onClick={() => window.location.href = "http://localhost:5173/produtos"} />
+          </div>
+        </Col>
+        <Col className=" d-flex justify-content-center mr-5">
+          <p className="text-center mt-2 fs-1 header">
+            Carrinho
+          </p>
+        </Col>
+        <Col>
+          <img src="https://belenergy.com.br/wp-content/themes/belenergy/assets/images/svg/logo-v2.svg" href='/produtos' />
+        </Col>
+      </Row>
+
       <Row className='mb-3 pt-4 headerItens'>
         <Col>
           <p className="text-start fs-1 header" >
@@ -103,8 +120,8 @@ export default function carrinho() {
                     Quantidade disponível: {quantidadeDisponivel}
                     <Col>
                       <button className="botaoCarrinho" onClick={decrementarQuantidade}>-</button>
-                      <input type="text" className="quantidadeCarrinho" value={quantidade} />
-                      <button className="botaoCarrinho" onClick={incrementarQuantidade}>+</button>
+                      <input defaultValue={quantidade} type="text" className="quantidadeCarrinho" />
+                      <button className="botaoCarrinho"  onClick={incrementarQuantidade}>+</button>
                     </Col>
 
                   </Row>
@@ -117,8 +134,10 @@ export default function carrinho() {
       <Row>
         <p className='text-end valorTotal'>Valor total: R${valorTotal.toFixed(2)}</p>
       </Row>
+      <Row>
+        <p className='text-center fs-1 bgCliente header formData'>Informações do cliente</p>
 
-      <p className='text-center fs-1 bgCliente header'>Informações do cliente</p>
+      </Row>
 
       <Form onSubmit={handleSubmit} className="mt-3">
         <Row>
