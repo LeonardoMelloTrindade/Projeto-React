@@ -6,43 +6,40 @@ import './telaConfirmacao.css'
 export default function telaConfirmacao() {
 
     const { formData, setFormData } = useCarrinhoContext()
-
     const [itensPedido, setItensPedido] = useState([]);
     let valorTotal = 0;
 
     useEffect(() => {
         const savedFormData = JSON.parse(localStorage.getItem('formData'));
+        const itensStorage = JSON.parse(localStorage.getItem('itensPedido'));
         if (savedFormData) {
             setFormData(savedFormData);
             localStorage.removeItem('formData')
         }
-        const itens = [];
-        let index = 1;
-        while (localStorage.getItem(index)) {
-            const item = JSON.parse(localStorage.getItem(index));
-            itens.push(item);
-            localStorage.removeItem('index')
-            index++;
+        if (itensStorage) {
+            setItensPedido(itensStorage);
+            localStorage.removeItem('itensPedido')
         }
-        setItensPedido(itens);
     }, []);
 
     return (
         <>
-            <Row>
-                <Alert key='success' variant='success' className='text-center header'>
-                    <h2>Compra realizada com sucesso.</h2>
-                </Alert>
+            <Row className='mb-3 pt-1 bgHeader d-flex justify-content-center'>
+                <Row>
+                    <img src="https://belenergy.com.br/wp-content/themes/belenergy/assets/images/svg/logo-v2.svg" href='/produtos' className='tamanhoHeaderImg' />
+                </Row>
             </Row>
+            <div className='divAlert'>
+                <Alert key='success' variant='success' className='text-center header tamamnhoAlert'>
+                    <p className='fs-4 '>Compra realizada com sucesso.</p>
+                </Alert>
+            </div>
 
-            <Container>
-                <h3 className='text-center'>Informações da compra</h3>
-                <hr />
-            </Container>
+           <hr />
 
             <Row className='d-flex justify-content-between'>
                 <Col>
-                    <h3>informações do cliente</h3>
+                    <h3 className=''>informações de entrega</h3>
                     <Alert variant='info' key='info'>
                         <h4>Nome: </h4>
                         <p>{formData.nome}</p>
@@ -65,7 +62,7 @@ export default function telaConfirmacao() {
                 </Col>
                 <Col>
                     <h3>Produtos Comprados</h3>
-                    <Alert variant='dark' key='dark'>
+                    <Alert variant='info' key='info'>
                         <ol type='I'>
                             {itensPedido.map(item => {
                                 valorTotal += parseFloat(item.preco);
@@ -76,7 +73,7 @@ export default function telaConfirmacao() {
                             })}
 
                         </ol>
-                        <hr/>
+                        <hr />
 
                         <Row className='mt-3'>
                             <h4 className='text-end'>Valor total da compra: <span className='colorPreco'>R${valorTotal.toFixed(2)}</span></h4>
