@@ -3,6 +3,20 @@
 }
 
 .header {
-
     font-family: "Lucida Console", monospace;
+}
+
+.tamanhoHeaderImg {
+    height: 100px;
+    width: 300px;
+}
+
+.tamamnhoAlert {
+    width: 60%;
+}
+
+.divAlert {
+    display: flex;
+    justify-content: center;
+
 }

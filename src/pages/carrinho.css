@@ -1,6 +1,15 @@
 .headerItens, .formData {
     background-color: rgb(0, 0, 0);
     color: rgb(240, 236, 19);
+    border-radius: 10px;
+}
+
+.formData {
+    padding: 10px;
+}
+
+.bgHeader {
+    background-color: black;
 }
 
 .header {
@@ -37,6 +46,7 @@
 
 .tamanhoTable {
     width: 100%;
+    background-color: azure;
 }
 
 .formulario {
@@ -45,10 +55,6 @@
 
 td {
     width: 25%;
-}
-
-.bgCliente {
-    display: inline;
 }
 
 .botaoApagar {
@@ -68,3 +74,14 @@ td {
     width: 50%;
 }
 
+.containerPrincipal {
+    width: 850px;
+}
+
+.tableNomeProduto {
+    font-size: smaller;
+}
+
+.selectQuantidade {
+    width: 200px;
+}

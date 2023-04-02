@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import {useSelector, useDispatch} from 'react-redux'
 import { Row, Col, Form, Card } from 'react-bootstrap';
 import { BsFillBagPlusFill, BsCart } from "react-icons/bs";
 import ProdutoService from "../services/produtos.service";
 import { ToastContainer, toast } from 'react-toastify';
+import allActions from '../actions'
 import 'react-toastify/dist/ReactToastify.css';
 import './listaProdutos.css';
 
 
 export default function listaProdutos() {
-    var chaveLocalStorage = 1;
     const [produtos, setProdutos] = useState([]);
     const [categoria, setCategoria] = useState('');
     const produtoService = new ProdutoService();
     const notify = () => toast.success("Item adicionado ao carrinho!");
+    const counter = useSelector(state => state.counter)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         produtoService.get(categoria).then((res) => {
@@ -20,17 +23,17 @@ export default function listaProdutos() {
             setProdutos(res.data.data);
         })
     }, [categoria])
-
+    
 
     const addItemCarrinho = (teste) => {
-        localStorage.setItem(chaveLocalStorage, teste)
+        dispatch(allActions.counterCartActions.increment())
+        localStorage.setItem(counter, teste)
         notify();
-        chaveLocalStorage += 1
     }
 
     return (
         <>
-            <Row className='mb-3 pt-4 bg d-flex align-items-center'>
+            <Row className='mb-3 pt-4 bgHeader d-flex align-items-center'>
                 <Col>
                     <img src="https://belenergy.com.br/wp-content/themes/belenergy/assets/images/svg/logo-v2.svg" href='/produtos'/>
                 </Col>
@@ -41,6 +44,7 @@ export default function listaProdutos() {
                 </Col>
                 <Col className=" d-flex justify-content-center mr-5">
                     <div href="/carrinho" variant="danger">
+                        <p className="quantidadeCarrinho">{counter}</p>
                         <BsCart className="carrinho" onClick={() => window.location.href = "http://localhost:5173/carrinho"} />
                     </div>
                 </Col>
