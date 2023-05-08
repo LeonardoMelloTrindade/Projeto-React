@@ -1,16 +1,10 @@
-const increment = () => {
+const setCart = (qtd) => {
     return {
-        type: "INCREMENT"
-    }
-}
-
-const decrement = () => {
-    return {
-        type: "DECREMENT"
+        type: "SETCART", 
+        payload: qtd
     }
 }
 
 export default {
-    increment,
-    decrement
+   setCart
 }

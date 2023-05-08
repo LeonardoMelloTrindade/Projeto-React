@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {useSelector, useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Form, Card } from 'react-bootstrap';
 import { BsFillBagPlusFill, BsCart } from "react-icons/bs";
 import ProdutoService from "../services/produtos.service";
+import ServicoStorage from "../services/servicoStorage.service";
+import { NavLink } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import allActions from '../actions'
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,21 +15,32 @@ export default function listaProdutos() {
     const [produtos, setProdutos] = useState([]);
     const [categoria, setCategoria] = useState('');
     const produtoService = new ProdutoService();
+    const servicoStorage = new ServicoStorage();
     const notify = () => toast.success("Item adicionado ao carrinho!");
     const counter = useSelector(state => state.counter)
     const dispatch = useDispatch()
 
     useEffect(() => {
+        const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+        dispatch(allActions.counterCartActions.setCart(produtos.length));
+    }, []);
+
+    useEffect(() => {
         produtoService.get(categoria).then((res) => {
-            console.log(res.data.data);
-            setProdutos(res.data.data);
+        setProdutos(res.data.data);
         })
     }, [categoria])
-    
 
-    const addItemCarrinho = (teste) => {
-        dispatch(allActions.counterCartActions.increment())
-        localStorage.setItem(counter, teste)
+
+
+    const addItemCarrinho = (produto) => {
+        
+        console.log(typeof produto)
+        let produtos = servicoStorage.getProdutosNoLocalStorage()
+        console.log(produtos)
+        produtos.push(produto)
+        servicoStorage.salvarProdutosNoLocalStorage(produtos)
+        dispatch(allActions.counterCartActions.setCart(produtos.length))
         notify();
     }
 
@@ -35,7 +48,7 @@ export default function listaProdutos() {
         <>
             <Row className='mb-3 pt-4 bgHeader d-flex align-items-center'>
                 <Col>
-                    <img src="https://belenergy.com.br/wp-content/themes/belenergy/assets/images/svg/logo-v2.svg" href='/produtos'/>
+                    <img src="https://belenergy.com.br/wp-content/themes/belenergy/assets/images/svg/logo-v2.svg" href='/produtos' />
                 </Col>
                 <Col>
                     <p className="text-center mt-2 fs-1 header">
@@ -45,7 +58,10 @@ export default function listaProdutos() {
                 <Col className=" d-flex justify-content-center mr-5">
                     <div href="/carrinho" variant="danger">
                         <p className="quantidadeCarrinho">{counter}</p>
-                        <BsCart className="carrinho" onClick={() => window.location.href = "http://localhost:5173/carrinho"} />
+                        <NavLink to='/carrinho'>
+                            <BsCart className="carrinho" />
+                        </NavLink>
+
                     </div>
                 </Col>
             </Row>
@@ -109,7 +125,7 @@ export default function listaProdutos() {
                                         <hr />
                                         <div className="d-flex justify-content-between">
 
-                                            <Col onClick={() => addItemCarrinho(JSON.stringify(produto))}>
+                                            <Col onClick={() => addItemCarrinho(produto)}>
                                                 <BsFillBagPlusFill className="btnAddCarrinho" />
                                             </Col>
                                             <Col>

@@ -1,5 +1,5 @@
 .containerPrincipal {
-    width: 850px;
+    width: 800px;
 }
 
 .formData {
@@ -13,7 +13,17 @@
     font-family: "Lucida Console", monospace;
 }
 
-.tamanhoHeader {
-    height: 200px;
-    width: 500px;
+.tamanhoHeaderImg {
+    height: 100px;
+    width: 300px;
+}
+
+.btnConfirma {
+    width: 200px;
+    padding: 10px;
+    border-radius: 15px;
+    color: rgb(255, 255, 0);
+    background-color: black;
+    font-weight: bold;
+    margin-top: 20px;
 }
